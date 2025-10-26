@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Sentiment Analyzer</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='iconss.png') }}"/>
+    
+  
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url("{{ url_for('static', filename='Untitled3.png') }}");
+            height: 60vh;
+      background-size: cover;      
+      background-position: center; 
+      background-repeat: no-repeat;              
+      margin: 0;
+            text-align: center; 
+            padding: 20px; 
+        }
+        
+form{background-image: url("{{ url_for('static', filename='Untitled.png') }}");
+           
+      background-position: center; 
+      background-repeat: no-repeat;
+      
+      height: 50vh;               
+      margin: 0;}
+        .container {
+            width: 90%; 
+            max-width: 600px; 
+            margin: 0 auto; 
+            padding: 20px;
+        }
+        h1 {
+            color: white;
+            margin-bottom: 10px;
+        }
+        p {
+            color: white;
+            margin-bottom: 20px;
+        }
+        textarea {
+            width: 95%;
+            padding: 10px;
+            border: 1px solid black;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+        button {
+            width: 95%;
+            padding: 10px;
+            background-image:linear-gradient(to left, darkblue, rgb(5, 101, 133));
+            color: white;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+        }
+        .result-box {
+            margin-top: 20px;
+            padding: 15px;
+            color: white;
+            font-weight: bold;
+            display: inline-block;
+        }
+        .result-positive {
+            background-image: linear-gradient(to left, lightgreen, darkgreen);
+        }
+        .result-negative {
+            background-image: linear-gradient(to left, rgb(255, 85, 0), red);
+        }
+    </style>
+</head>
+<body>
+    
+
+        <form method="POST" action="/">
+            <div class="container">
+        <h1>Movie Review Analyzer</h1>
+        <p>Paste a movie review below to classify it as positive or negative.</p>
+            <textarea 
+                name="review_text" 
+                rows="6" 
+                placeholder="Example: This movie was an absolute triumph of cinematic storytelling and direction!"
+                required>{{ review_text if review_text else '' }}</textarea>
+            
+            <button type="submit">
+                Analyze Sentiment
+            </button>
+        </form>
+
+        {% if sentiment %}
+        <div class="result-box {{ 'result-positive' if sentiment == 'positive' else 'result-negative' }}">
+            <h2>Result: <span style="font-size: 1.5em; text-transform: uppercase;">{{ sentiment }}</span></h2>
+            {% if probability %}
+            <p style="margin: 5px 0 0 0;">
+                Confidence: {{ probability }}%
+            </p>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+
+</body>
+</html>
